@@ -15,6 +15,14 @@ public interface TwetDAO {
 	public void insert(TwetMsg tweet);
 	
 	/**
+	 * 向数据库中插入感情数据
+	 * @param id
+	 * @param motionType 感情种类
+	 * @param confidence
+	 */
+	public void updateEmotion(int id,String motionType,double confidence) ;
+	
+	/**
 	 * 根据消息ID获取推特
 	 * @param id
 	 * @return
@@ -26,4 +34,5 @@ public interface TwetDAO {
 	 * @return
 	 */
 	public TwetMsg findByMaxID();
+	
 }

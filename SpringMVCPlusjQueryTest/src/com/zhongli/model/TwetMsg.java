@@ -3,6 +3,7 @@ package com.zhongli.model;
 import java.util.Arrays;
 
 public class TwetMsg {
+	private int id;
 	private String userName;
 	private String msg;
 	private String week;
@@ -122,6 +123,16 @@ public class TwetMsg {
 				+ timeZone + ", year=" + year + ", time=" + time
 				+ ", location=" + Arrays.toString(location) + ", language="
 				+ language + "]";
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

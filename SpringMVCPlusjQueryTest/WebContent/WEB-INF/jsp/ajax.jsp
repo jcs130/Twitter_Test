@@ -17,9 +17,18 @@
 	var myCenter = new google.maps.LatLng(51.508742, -0.120850);
 	var map;
 	var markersArray = [];
-	var infowindowArray=[];
+	var infowindowArray = [];
 	var lat;
 	var lon;
+	var pos = 'pics/pos32.png';
+	pos.height = 32;
+	pos.width = 32;
+	var neu = 'pics/neu32.png';
+	neu.height = 32;
+	neu.width = 32;
+	var neg = 'pics/neg32.png';
+	neg.height = 32;
+	neg.width = 32;
 	function initialize() {
 		var mapProp = {
 			center : myCenter,
@@ -30,17 +39,27 @@
 
 	}
 
-	function placeMarker(location, content) {
+	function placeMarker(location, content, emotion) {
 		//如果表计数量大于一定值，则删除最后一个
-		if(markersArray.length>15){
+		if (markersArray.length > 15) {
 			markersArray.shift().setMap(null);
-			infowindowArray,shift().close();
+			infowindowArray.shift().close();
 		}
-		
-		 
+		var ticon;
+		//根据情感来选择表情图标
+		if (emotion == "positive") {
+			ticon = pos;
+		} else if (emotion == "negative") {
+			ticon = neg;
+		} else if (emotion == "neutral") {
+			ticon = neu;
+		} else {
+			ticon = null;
+		}
 		var marker = new google.maps.Marker({
 			position : location,
 			animation : google.maps.Animation.DROP,
+			icon : ticon,
 			map : map
 		});
 		markersArray.push(marker);
@@ -62,7 +81,19 @@
 					url : 'ajaxgetloc.html',
 					success : function(data) {
 						//$('#result').html(data);
-						jsonData = $.parseJSON(data);
+						var jsonData;
+						try {
+							jsonData = $.parseJSON(data);
+						} catch (e) {
+							alert("解析JSON错误：JSON： " + data);
+							alert(e.name + "\n" + e.number + "\n"
+									+ e.descripition + "\n" + e.message);
+						}
+						//var temp="'"+data+"'";
+						//	var jsonData=JSON.parse(data);
+						//	var jsonData = function(data) {
+						//		return eval('(' + data + ')');
+						//	}
 						// alert(jsonData.userName);
 						//$('#result')
 						//		.html(jsonData.msg + "----loc:" + jsonData.location);
@@ -72,11 +103,17 @@
 							lon = jsonData.location[1];
 							//在地图上标明
 							var loc = new google.maps.LatLng(lat, lon);
-
-							placeMarker(loc, jsonData.msg);
+							try {
+								placeMarker(loc, jsonData.msg, jsonData.emotion);
+							} catch (e) {
+								alert(e.name + "\n" + e.number + "\n"
+										+ e.descripition + "\n" + e.message);
+							}
 						}
+
 					}
 				});
+
 		/* 
 		 
 		$.ajax({

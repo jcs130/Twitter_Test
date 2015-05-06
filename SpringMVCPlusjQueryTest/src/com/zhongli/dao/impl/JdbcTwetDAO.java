@@ -102,8 +102,36 @@ public class JdbcTwetDAO implements TwetDAO {
 						rs.getString("time"), rs.getString("timezone"),
 						rs.getInt("year"), rs.getDouble("location_lat"),
 						rs.getDouble("location_lan"), rs.getString("language"));
+				twetMsg.setId(rs.getInt("numid"));
 			}
 			return twetMsg;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+			}
+		}
+	}
+
+	@Override
+	public void updateEmotion(int id, String motionType, double confidence) {
+		String sqlString="UPDATE alltwets SET emotion=?, confidence=? WHERE numID=?";
+		System.out.println("id:"+id+"motion:"+motionType);
+		Connection conn = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sqlString);
+			ps.setString(1, motionType);
+			ps.setDouble(2, confidence);
+			ps.setInt(3, id);
+			ps.executeUpdate();
+			
+			ps.close();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 
