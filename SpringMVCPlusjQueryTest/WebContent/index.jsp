@@ -20,6 +20,10 @@ body {
 			<a href="welcome.html">Click here to See Welcome Message... </a>(to
 			check Spring MVC Controller... @RequestMapping("/welcome"))
 		</h3>
+		<h3>
+			<a href="ajax.html">Click here to See Twitter on Map... </a>(to
+			check Spring MVC Controller... @RequestMapping("/ajax"))
+		</h3>
 	</div>
 </body>
 </html>

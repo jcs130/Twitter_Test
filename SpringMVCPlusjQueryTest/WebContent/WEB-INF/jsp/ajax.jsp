@@ -13,6 +13,26 @@
 	src="http://code.jquery.com/jquery-2.1.3.min.js">
 	
 </script>
+
+<script type="text/javascript">
+	//判断是否为PC访问
+	function IsPC() {
+		var userAgentInfo = navigator.userAgent;
+		var Agents = [ "Android", "iPhone", "SymbianOS", "Windows Phone",
+				"iPad", "iPod" ];
+		var flag = true;
+		for (var v = 0; v < Agents.length; v++) {
+			if (userAgentInfo.indexOf(Agents[v]) > 0) {
+				flag = false;
+				break;
+			}
+		}
+		return flag;
+	}
+</script>
+
+
+
 <script type="text/javascript">
 	var myCenter = new google.maps.LatLng(51.508742, -0.120850);
 	var map;
