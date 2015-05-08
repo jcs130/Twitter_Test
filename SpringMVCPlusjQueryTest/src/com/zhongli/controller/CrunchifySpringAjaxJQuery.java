@@ -63,7 +63,7 @@ public class CrunchifySpringAjaxJQuery {
 		TwetDAO twitterDAO = (TwetDAO) context.getBean("twetDAO");
 		TwetMsg tMsg = twitterDAO.findByMaxID();
 		ShowMsg sMsg = new ShowMsg(tMsg);
-		// 如果是之前的句子则不判断
+		// 如果没有情绪标记则取得标记
 		if (tMsg.getId() != oldID) {
 			// 判断语言并调用情感判断的API判断情感色彩
 			if (tMsg.getLanguage().equals("en")) {
